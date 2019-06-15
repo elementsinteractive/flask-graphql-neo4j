@@ -20,6 +20,9 @@ services:
       - flask-graphql-neo4j-dev
     environment:
       - NEO4J_AUTH=none
+    ports:
+      - 127.0.0.1:7474:7474
+      - 127.0.0.1:7687:7687
 
 networks:
   flask-graphql-neo4j-dev: {}
