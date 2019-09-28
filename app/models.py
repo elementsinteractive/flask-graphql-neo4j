@@ -29,7 +29,7 @@ class BaseModel(GraphObject):
 
     @property
     def all(self):
-        return self.select(graph)
+        return self.match(graph)
 
     def save(self):
         graph.push(self)
@@ -50,7 +50,7 @@ class Product(BaseModel):
         }
 
     def fetch(self):
-        return self.select(graph, self.name).first()
+        return self.match(graph, self.name).first()
 
 
 class Store(BaseModel):
@@ -61,10 +61,10 @@ class Store(BaseModel):
     receipts = RelatedTo('Product', 'EMITTED')
 
     def fetch(self, _id):
-        return Store.select(graph, _id).first()
+        return Store.match(graph, _id).first()
 
     def fetch_by_name_and_address(self):
-        return Store.select(graph).where(
+        return Store.match(graph).where(
             f'_.name = "{self.name}" AND _.address = "{self.address}"'
         ).first()
 
@@ -76,7 +76,7 @@ class Store(BaseModel):
 
     def as_dict(self):
         return {
-            '_id': self._GraphObject__ogm.node._Entity__remote._id,
+            '_id': self.__primaryvalue__,
             'name': self.name,
             'address': self.address
         }
@@ -96,13 +96,13 @@ class Receipt(BaseModel):
 
     def as_dict(self):
         return {
-            '_id': self._GraphObject__ogm.node._Entity__remote._id,
+            '_id': self.__primaryvalue__,
             'total_amount': self.total_amount,
             'timestamp': maya.parse(self.timestamp)
         }
 
     def fetch(self, _id):
-        return self.select(graph, _id).first()
+        return self.match(graph, _id).first()
 
     def fetch_products(self):
         return [{
@@ -128,7 +128,7 @@ class Customer(BaseModel):
     stores = RelatedTo('Store', 'GOES_TO')
 
     def fetch(self):
-        customer = self.select(graph, self.email).first()
+        customer = self.match(graph, self.email).first()
         if customer is None:
             raise GraphQLError(f'"{self.email}" has not been found in our customers list.')
 
