@@ -15,7 +15,7 @@ services:
       - 127.0.0.1:8080:8080
 
   neo4j:
-    image: neo4j:3.5.0
+    image: neo4j:3.5.11
     networks:
       - flask-graphql-neo4j-dev
     environment:
