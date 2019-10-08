@@ -8,11 +8,15 @@ Simple Flask proof of concept financial API to test-drive GraphQL and Neo4j with
 
 You can read more about this in our [blog post](https://medium.com/elements/diving-into-graphql-and-neo4j-with-python-244ec39ddd94).
 
-### Installation
+### Usage
 
-```shell
-pipenv install
+The simplest way is:
+
+``` shell
+docker-compose up
 ```
+
+The Neo4j web ui will be available at localhost:7474 and the API under localhost:8080.
 
 ### License
 
