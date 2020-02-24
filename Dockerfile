@@ -1,6 +1,6 @@
-FROM python:3.7.4-alpine3.10
+FROM python:3.7.6-alpine3.11
 
-RUN apk add --no-cache build-base gcc
+RUN apk add --no-cache build-base gcc libffi-dev libressl-dev
 
 COPY Pipfile* /tmp/
 WORKDIR /tmp/
